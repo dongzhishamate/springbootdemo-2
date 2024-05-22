@@ -10,30 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Checkout repository
       uses: actions/checkout@v2
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-    
-    - name: Log in to Alibaba Cloud Container Registry
-      env:
-        REGISTRY_USERNAME: ${{ secrets.ALIYUN_REGISTRY_USERNAME }}
-        REGISTRY_PASSWORD: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
-      run: |
-        echo "$REGISTRY_PASSWORD" | docker login --username "$REGISTRY_USERNAME" --password-stdin registry.cn-shanghai.aliyuncs.com
 
-    - name: Build and push Docker image
+    - name: Log in to Aliyun Docker registry
+      env:
+        REGISTRY_URL: ${{ secrets.ALIYUN_REGISTRY_URL }}
+        USERNAME: ${{ secrets.ALIYUN_REGISTRY_USERNAME }}
+        PASSWORD: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
+      run: echo $PASSWORD | docker login $REGISTRY_URL -u $USERNAME --password-stdin
+
+    - name: Build Docker image
       uses: docker/build-push-action@v2
       with:
         context: .
         file: ./Dockerfile
-        push: true
-        tags: zfy_test/springbootdemo-2:latest
+        push: false
+        tags: ${{ secrets.ALIYUN_REGISTRY_URL }}/<namespace>/<repository>:latest
 
     - name: Tag the Docker image for production
-      run: docker tag zfy_test/springbootdemo-2:latest registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
+      run: docker tag ${{ secrets.ALIYUN_REGISTRY_URL }}/<namespace>/<repository>:latest ${{ secrets.ALIYUN_REGISTRY_URL }}/<namespace>/<repository>:latest
 
-    - name: Push Docker image
-      run: docker push registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
+    - name: Push Docker image to Aliyun
+      run: docker push ${{ secrets.ALIYUN_REGISTRY_URL }}/<namespace>/<repository>:latest
+
+    - name: Log out from Docker
+      run: docker logout ${{ secrets.ALIYUN_REGISTRY_URL }}
