@@ -33,7 +33,7 @@ jobs:
         tags: zfy_test/springbootdemo-2:latest
 
     - name: Tag the Docker image for production
-      run: docker tag zfy_test/springbootdemo-2:latest registry.cn-shanghai.aliyuncs.com/your-repo/your-image:latest
+      run: docker tag zfy_test/springbootdemo-2:latest registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
 
     - name: Push Docker image
       run: docker push registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
