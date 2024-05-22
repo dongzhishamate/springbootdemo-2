@@ -18,7 +18,7 @@ jobs:
         echo "$REGISTRY_PASSWORD" | docker login --username "$REGISTRY_USERNAME" --password-stdin registry.cn-shanghai.aliyuncs.com
 
     - name: Build Docker image
-      run: docker build . -t registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
+      run: docker build -t registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest .
 
     - name: Push Docker image
       run: docker push registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
