@@ -30,7 +30,10 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
+        tags: zfy_test/springbootdemo-2:latest
+
+    - name: Tag the Docker image for production
+      run: docker tag zfy_test/springbootdemo-2:latest registry.cn-shanghai.aliyuncs.com/your-repo/your-image:latest
 
     - name: Push Docker image
       run: docker push registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
