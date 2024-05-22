@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Log in to Alibaba Cloud Container Registry
+      env:
+        REGISTRY_USERNAME: ${{ secrets.ALIYUN_REGISTRY_USERNAME }}
+        REGISTRY_PASSWORD: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
+      run: |
+        echo "$REGISTRY_PASSWORD" | docker login --username "$REGISTRY_USERNAME" --password-stdin registry.cn-shanghai.aliyuncs.com
+
+    - name: Build Docker image
+      run: docker build . -t registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
+
+    - name: Push Docker image
+      run: docker push registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
