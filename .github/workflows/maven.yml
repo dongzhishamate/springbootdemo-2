@@ -30,6 +30,7 @@ jobs:
         file: ./Dockerfile
         push: false
         tags: zfy_test/springbootdemo-2:latest
+        outputs: type=docker
 
     - name: List Docker images
       run: docker images
