@@ -21,7 +21,7 @@ jobs:
         REGISTRY_URL: ${{ secrets.ALIYUN_REGISTRY_URL }}
         USERNAME: ${{ secrets.ALIYUN_REGISTRY_USERNAME }}
         PASSWORD: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
-      run: echo $PASSWORD | docker login --username=$USERNAME $REGISTRY_URL
+      run: echo $PASSWORD | docker login $REGISTRY_URL -u $USERNAME --password-stdin
 
     - name: Build Docker image
       uses: docker/build-push-action@v2
