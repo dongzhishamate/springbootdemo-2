@@ -29,10 +29,10 @@ jobs:
         context: .
         file: ./Dockerfile
         push: false
-        tags: registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
+        tags: zfy_test/springbootdemo-2:latest
 
     - name: Tag the Docker image for production
-      run: docker tag registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
+      run: docker tag zfy_test/springbootdemo-2:latest registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
 
     - name: Push Docker image to Aliyun
       run: docker push registry.cn-shanghai.aliyuncs.com/zfy_test/springbootdemo-2:latest
